@@ -135,7 +135,7 @@
 
             const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-            const pie = d3.pie().value(d => d.budget);
+            const pie = d3.pie().value(d => d.value);
             const arc = d3.arc().innerRadius(100).outerRadius(radius);
 
             const arcs = svg.selectAll("arc")
@@ -160,10 +160,10 @@
         function getBudget() {
             axios.get('http://localhost:3000/budget')
                 .then(function (res) {
-                    const budgetData = res.data.myBudget;
+                    const budgetData = res.data;
 
                     dataSource.labels = budgetData.map(item => item.title);
-                    dataSource.datasets[0].data = budgetData.map(item => item.budget);
+                    dataSource.datasets[0].data = budgetData.map(item => item.value);
                     createChart();
                     createD3Chart(budgetData);
                 });
